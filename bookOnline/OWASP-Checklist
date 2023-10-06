@@ -1,0 +1,6 @@
+OWASP (Open Web Application Security Project)
+Use Spring Data JPA or JDBC templates with prepared statements to parameterize your database queries
+Implement secure authentication and authorization mechanisms using Spring Security.(@EnableWebSecurity)
+Ensure sensitive data is stored securely using encryption,Avoid logging sensitive data, and use HTTPS for secure communication.
+Use tools like OWASP Dependency-Check to identify vulnerable dependencies.
+Sanitize and validate user input. Use libraries like OWASP Java HTML Sanitizer to prevent XSS attacks.

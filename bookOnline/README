@@ -1,0 +1,17 @@
+## sample code of Booking movie tickets online. Its coding assignment given by Hiring company.
+
+# swagger UI URL
+http://localhost:9090/swagger-ui/index.html
+
+# Monitoring URL
+http://localhost:9090/actuator/health
+
+# Elasticsearch UI
+http://localhost:9200/_stats
+http://localhost:9200/theatre
+curl -XGET 'localhost:9200/theatre/_search?size=100&pretty'
+
+# Database setup sql file in folder database/db-setup.sql
+
+
+![Architecture diagram](https://github.com/gsbadhan/mbp/blob/52671d5cb33a3bfb37e696a38799cabae4201cee/architecture-overview.png)

@@ -1,0 +1,6 @@
+package mbp.order.util;
+
+public enum OrderAction {
+
+    CREATED, INVENTORY_BLOCKED, PAYMENT_PROCESSED, INVENTORY_CONFIRMED, PROCESSED, FULFILLED, CANCELLED;
+}

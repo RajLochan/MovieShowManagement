@@ -1,0 +1,126 @@
+## server configuration
+server:
+  port: 9080
+spring:
+  shutdown:
+    enable: true
+  profiles:
+    active: svt
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+  redis:
+    host: localhost
+    port: 6379
+  cache:
+    cache-names:
+      - myCache
+    caches:
+      myCache:
+        ttl: 600 # TTL in seconds (adjust as needed)
+data service:
+  openapi:
+    dev-url: http://localhost:9080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+order:
+  create:
+    queue: order_create_queue
+    seat:
+      lock: order_seat_lock_queue
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
+
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 3
+      waitDuration: 500
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+      ignoreExceptions:
+        - java.lang.NullPointerException
+      retryExceptions:
+        - java.util.concurrent.TimeoutException
+mbp:
+  order:
+    API_KEY: TestAPIKey
+  booking:
+    API_KEY: bookingAPIKey
+  onboard:
+    API_KEY: TestAPIKey
+---
+
+
+
+## Dev Profile
+spring:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    initialization-mode: always
+   # initialize: true
+   # platform: h2
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
+---
+
+
+## SVT Profile
+spring:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  config:
+    activate:
+      on-profile: svt
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mbp_order
+    username: root
+    password: password
+    initialization-mode: always
+    schema: schema.sql
+  jpa:
+    show-sql: true
+   # defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+
+
